@@ -1,0 +1,16 @@
+.note{
+    height: 30vh;
+    white-space: pre-wrap;
+}
+textarea:focus{
+    outline: none;
+}
+.dark-mode{
+    background-color: black;
+}
+.dark-mode h1{
+    color: white;
+}
+.appContainer{
+    height: 100vh;
+}
