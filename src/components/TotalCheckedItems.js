@@ -1,10 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
-const TotalCheckedItems = () => {
-  const totalCompleted = useSelector((state) =>
-    state.todos.filter((todo) => todo.completed === true)
+const TotalCheckedItems = ({ checkedItems, handleClearData }) => {
+  const ClearDataButton = () => {
+    handleClearData();
+  };
+  return (
+    <div className="container my-2">
+      <h3>Total Checked Tasks : {checkedItems}</h3>
+      <button className="btn btn-sm btn-danger" onClick={ClearDataButton}>
+        Clear All Data
+      </button>
+    </div>
   );
-  return <h4>Total tasks completed : {totalCompleted.length}</h4>;
 };
 export default TotalCheckedItems;

@@ -1,44 +1,39 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { toggleComplete, deleteTodo } from "./utils/todoSlice";
-
-const ToDoItem = ({ item }) => {
-  const dispatch = useDispatch();
-  const handleDelete = () => {
-    dispatch(
-      deleteTodo({
-        id: item.id,
-      })
-    );
+const ToDoItem = ({ task, handleCheck, handleDel, handleEditTodo }) => {
+  const handleCh = () => {
+    handleCheck(task.id);
   };
-  const handleCompleteClick = () => {
-    dispatch(
-      toggleComplete({
-        id: item.id,
-        completed: !item.completed,
-      })
-    );
+  const handleDelete = () => {
+    handleDel(task.id);
+  };
+  const handleEdit = (e) => {
+    handleEditTodo(e, task);
   };
   return (
     <li
-      className={`list-group-item ${
-        item.completed && "list-group-item-success "
-      }`}
+      className={`${
+        task.completed && "list-group-item-success "
+      } list-group-item d-flex justify-content-between border align-items-center  p-2`}
     >
-      <div className="d-flex justify-content-between ">
-        <span className="d-flex align-items-center  ">
-          <input
-            type="checkbox"
-            checked={item.completed}
-            className="form-check me-4 "
-            onChange={handleCompleteClick}
-          ></input>
-          <label>{item?.title}</label>
-        </span>
-        <button className="btn btn-danger " onClick={handleDelete}>
-          Delete
-        </button>
+      <div className="d-flex">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          checked={task.completed}
+          onChange={handleCh}
+        ></input>
+        <label className="form-check-label ms-4">{task.title}</label>
       </div>
+
+      <button
+        className="btn btn-sm btn-primary ms-auto me-1"
+        onClick={handleEdit}
+      >
+        edit
+      </button>
+      <button className="btn btn-sm btn-danger " onClick={handleDelete}>
+        Delete
+      </button>
     </li>
   );
 };

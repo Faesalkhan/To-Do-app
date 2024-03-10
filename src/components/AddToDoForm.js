@@ -1,31 +1,40 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "./utils/todoSlice";
-
-const AddToDoForm = () => {
+const AddToDoForm = ({ handleAddTask }) => {
   const [todoValue, setTodoValue] = useState("");
-  const dispatch = useDispatch();
-  const submitForm = (e) => {
-    e.preventDefault();
-    todoValue.length !== 0
-      ? dispatch(
-          addTodo({
-            title: todoValue,
-          })
-        )
-      : alert("enter a to do task");
-    setTodoValue("");
+  const [warningVisible, setWarningVisible] = useState(false);
+  const handleAdd = () => {
+    if (todoValue.trim().length !== 0) {
+      setWarningVisible(false);
+      handleAddTask(todoValue);
+      setTodoValue("");
+    } else {
+      setWarningVisible(true);
+    }
   };
   return (
-    <form onSubmit={submitForm}>
-      <input
-        className="form-control my-3"
-        placeholder="Add to do..."
-        value={todoValue}
-        onChange={(e) => setTodoValue(e.target.value)}
-      ></input>
-      <button className="btn btn-primary ">Submit</button>
-    </form>
+    <div className="container my-2">
+      <div className="row">
+        <div className="col-12">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="create to do task..."
+            value={todoValue}
+            onChange={(e) => setTodoValue(e.target.value)}
+          ></input>
+          {warningVisible && (
+            <span style={{ color: "red", fontStyle: "italic" }}>
+              Please enter some text.
+            </span>
+          )}
+        </div>
+        <div className="col-2">
+          <button className="btn btn-sm btn-primary my-2" onClick={handleAdd}>
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 export default AddToDoForm;
